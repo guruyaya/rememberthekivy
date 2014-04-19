@@ -2,7 +2,7 @@
 MyScreenManager:
     transition: FadeTransition()
     MainMenuScreen:
-    SecondScreen:
+    GameScreen:
 
 <MainMenuScreen>:
     name: 'mainmenu'
@@ -17,36 +17,30 @@ MyScreenManager:
             keep_ratio: False
         BoxLayout:
             Button:
-                text: 'goto second screen'
+                text: 'goto game screen'
                 font_size: 30
-                on_release: app.root.current = 'second'
-            Button:
-                text: 'get random colour screen'
-                font_size: 30
-                on_release: app.root.new_colour_screen()
+                on_release: app.root.current = 'game'
 
-<SecondScreen>:
-    name: 'second'
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: 'second screen!'
-            font_size: 30
-        Image:
-            source: 'colours2.png'
-            allow_stretch: True
-            keep_ratio: False
-        BoxLayout:
-            Button:
-                text: 'goto main menu screen'
-                font_size: 30
-                on_release: app.root.current = 'mainmenu'
-            Button:
-                text: 'get random colour screen'
-                font_size: 30
-                on_release: app.root.new_colour_screen()
+<GameScreen>:
+    name: 'game'
+    canvas:
+        Rectangle:
+            pos: self.center_x - 5, 0
+            size: 10, self.height
+            
+    Label:
+        font_size: 70  
+        center_x: root.width / 4
+        top: root.top - 50
+        text: "0"
+        
+    Label:
+        font_size: 70  
+        center_x: root.width * 3 / 4
+        top: root.top - 50
+        text: "0"
 
-<ColourScreen>:
+<OptionsScreen>:
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -64,7 +58,3 @@ MyScreenManager:
                 text: 'goto mainmenu screen'
                 font_size: 30
                 on_release: app.root.current = 'mainmenu'
-            Button:
-                text: 'get random colour screen'
-                font_size: 30
-                on_release: app.root.new_colour_screen()

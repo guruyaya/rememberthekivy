@@ -1,6 +1,5 @@
 
 from kivy.app import App
-from kivy.base import runTouchApp
 from kivy.lang import Builder
 from kivy.properties import ListProperty
 from kivy.uix.boxlayout import BoxLayout
@@ -13,20 +12,16 @@ import random
 class MainMenuScreen(Screen):
     pass
 
-class SecondScreen(Screen):
+class GameScreen(Screen):
     pass
 
-class ColourScreen(Screen):
+class OptionsScreen(Screen):
     colour = ListProperty([1., 0., 0., 1.])
 
 class MyScreenManager(ScreenManager):
-    def new_colour_screen(self):
-        name = str(time.time())
-        s = ColourScreen(name=name,
-                         colour=[random.random() for _ in range(3)] + [1])
-        self.add_widget(s)
-        self.current = name
-
+    pass
+    
+# beggining defigning the app
 root_widget = Builder.load_file('rtk.pv')
 
 class ScreenManagerApp(App):
