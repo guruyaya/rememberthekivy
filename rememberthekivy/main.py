@@ -1,3 +1,7 @@
+''' Kivy super advanced memory game. No change in hell I'm finishing everything in time
+'''
+__version__ = '0.1'
+
 from kivy.app import App
 from kivy.base import runTouchApp
 from kivy.lang import Builder
@@ -13,8 +17,7 @@ from kivy.lang import Builder
 from kivy.uix.image import Image
 
 def img_touch(touch_event):
-    print touch_event
-    
+   pass 
 class PongGame(Widget):
     pass
 
@@ -30,6 +33,9 @@ class ColourScreen(Screen):
 class MyScreenManager(ScreenManager):
     pass
 
+class Card(Image):
+    pass
+
 class RtkApp(App):
     def build(self):
         root_widget = Builder.load_file('rtk.kv')
@@ -40,7 +46,7 @@ class RtkApp(App):
         for i in range(5):
             for j in range(5):
                 card_list[i].append( 
-                    Image(source='colours.png', size_hint=[0.18,0.18], 
+                    Card(source='colours.png', size_hint=[0.18,0.18], 
                           pos_hint={'top': (0.2 * (i+1)) - 0.01, 'right': (0.2 * (j+1)) - 0.01}))
                 pong_screen.add_widget(card_list[i][j])
                 
