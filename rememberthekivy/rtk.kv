@@ -5,11 +5,15 @@ MyScreenManager:
     FirstScreen:
     SecondScreen:
 
-<PongGame>:
-        
 <FirstScreen>:
-    name: 'ponggame'
-    PongGame:
+	FloatLayout:
+	    canvas.before:
+	        Color:
+	            rgba: 0, 0.5, 0, 1
+	        Rectangle:
+	            # self here refers to the widget i.e FloatLayout
+	            pos: self.pos
+	            size: self.size
 
 <SecondScreen>:
     name: 'second'
@@ -22,29 +26,6 @@ MyScreenManager:
             source: 'colours2.png'
             allow_stretch: True
             keep_ratio: False
-        BoxLayout:
-            Button:
-                text: 'goto first screen'
-                font_size: 30
-                on_release: app.root.current = 'first'
-            Button:
-                text: 'get random colour screen'
-                font_size: 30
-                on_release: app.root.new_colour_screen()
-
-<ColourScreen>:
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: 'colour {:.2},{:.2},{:.2} screen'.format(*root.colour[:3])
-            font_size: 30
-        Widget:
-            canvas:
-                Color:
-                    rgba: root.colour
-                Ellipse:
-                    pos: self.pos
-                    size: self.size
         BoxLayout:
             Button:
                 text: 'goto first screen'
