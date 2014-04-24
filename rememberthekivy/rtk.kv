@@ -6,14 +6,13 @@ MyScreenManager:
     SecondScreen:
 
 <FirstScreen>:
-	FloatLayout:
-	    canvas.before:
-	        Color:
-	            rgba: 0, 0.5, 0, 1
-	        Rectangle:
-	            # self here refers to the widget i.e FloatLayout
-	            pos: self.pos
-	            size: self.size
+    canvas.before:
+        Color:
+            rgba: 0, 0.5, 0, 1
+        Rectangle:
+            # self here refers to the widget i.e FloatLayout
+            pos: self.pos
+            size: self.size
 
 <SecondScreen>:
     name: 'second'
