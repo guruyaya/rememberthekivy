@@ -43,19 +43,26 @@ class Card(Image):
         self.front_side = front_side
         self.pair_num = pair_num
         self.card_up = False
+        self.card_gone = False
         
         Image.__init__(self, source=back_side, keep_ratio=False, 
                        size_hint = [card_x_size, card_y_size], **args)
     
     def set_card_up(self):
-        print self.front_side
+        self.game_board.cards_up += [self]
         self.card_up = True
         self.source = self.front_side
     
     def set_card_down(self):
+         if self in self.game_board.cards_up: self.game_board.cards_up.remove(self)
          self.card_up = False
          self.source = self.back_side
     
+    def set_card_gone(self):
+        '''
+        '''
+        self.game_board.canvas.remove_widget(self.game_board.card_list[self.board_x][self.board_y])
+        
     def flip_card(self):
         if self.card_up:
             self.set_card_down()
@@ -77,9 +84,7 @@ class GameBoard:
         self.cols = cols
         self.cards_spacing = cards_spacing
         self.top_cards_space = top_cards_space
-        
-        # preparing
-        self.card_array = [list() for row in range(rows)]
+        self.cards_up = []
     
     def prepare_cards_cavas_positions(self):
         """ prepare the sizes and positions of all cards"""
@@ -103,6 +108,10 @@ class GameBoard:
             for j in range(self.cols):
                 new_card = self.deck.pop()
                 new_card.pos_hint = {'top': self.y_positions[i], 'right': self.x_positions[j]}
+                new_card.game_board = self
+                new_card.board_x = i
+                new_card.board_y = j
+                
                 self.card_list[i].append(new_card)
                 self.canvas.add_widget(new_card)
                 
@@ -123,10 +132,27 @@ class GameBoard:
         
         return self.card_list[cardy][cardx]
     
+    def set_all_cards_down(self):
+        '''
+        '''
+        for cards_row in self.card_list:
+            for card in cards_row:
+                if card.card_up:
+                    card.set_card_down()
+    
 class FirstScreen(Screen):
     def on_touch_up(self, touch_event):
+        # if two cards are up - put all cards down
+        if len(self.game_board.cards_up) >= 2:
+            self.game_board.set_all_cards_down()
+            
         clickx, clicky = touch_event.spos
         self.game_board.get_card_from_pos(clickx, clicky).flip_card()
+        
+        # check for paring
+        if len(self.game_board.cards_up) >= 2 and self.game_board.cards_up[0].pair_num == self.game_board.cards_up[1].pair_num:
+            for card in self.game_board.cards_up:
+                card.set_card_gone()
         
 class SecondScreen(Screen):
     pass
